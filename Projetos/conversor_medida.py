@@ -21,7 +21,7 @@ class App08:
         Objetos.tela(self,'App 08 - Python')
 
         Objetos.botoes(self,self.fram01,'Analisar',lx=0.295,ly=0.525,largura=0.5,altura=0.165,comando=self.analisar)
-        Objetos.botoes(self,self.fram01,'Cancelar',lx=0.295,ly=0.725,largura=0.5,altura=0.165)
+        Objetos.botoes(self,self.fram01,'Cancelar',lx=0.295,ly=0.725,largura=0.5,altura=0.165,comando=self.limpar)
         
         Objetos.labels(self,self.fram01,'Digite um valor',lx=0.295,ly=0.225,largura=0.32,altura=0.09)
         
