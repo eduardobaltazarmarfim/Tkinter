@@ -31,11 +31,11 @@ class Objetos:
 
         pass
 
-    def labels(self,master,titulo,lx=0,ly=0,largura=0,altura=0,cores=None,posicao=None):
+    def labels(self,master,titulo,lx=0,ly=0,largura=0,altura=0,cores=None,posicao=None,lz=None):
 
         self.root=master
 
-        self.nome=Label(self.root,text=titulo,bg=cores,justify=posicao)
+        self.nome=Label(self.root,text=titulo,bg=cores,justify=posicao,anchor=lz)
         self.nome.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
 
         pass
