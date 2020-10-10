@@ -1,7 +1,7 @@
-from tkinter import*
+from tkinter import *
 from tkinter import messagebox
-from centralizarform import centralizando
-from componentes import Objetos
+from Modulos.centralizando import Centralizar
+from Modulos.componentes import Objetos
 
 class App03:
 
@@ -10,99 +10,82 @@ class App03:
 
         self.root=Tk()
 
-        centralizando.posicionar(self,350,220,False)
-        Objetos.tela(self,'App 03 - Python')
-        Objetos.labels(self,'Valor 01',lx=0.15,ly=0.15,largura=0.15,altura=0.1)
-        Objetos.labels(self,'Valor 02',lx=0.15,ly=0.30,largura=0.15,altura=0.1)
-        Objetos.labels(self,'Resultado',lx=0.15,ly=0.45,largura=0.15,altura=0.1)
+        Centralizar.posicionar(self,self.root,350,400,False)
+        Objetos.tela(self,self.root,'App 03 - Python')
 
-        Objetos.botoes(self,'Calcular',lx=0.09,ly=0.65,largura=0.4,altura=0.18,comando=lambda:self.calcular(self.val1.get(),self.val2.get()))
-        Objetos.botoes(self,'Limpar',lx=0.52,ly=0.65,largura=0.4,altura=0.18,comando=lambda:self.limpar(self.val1.get(),self.val2.get(),self.res.get()))
+        self.frame01=Frame(self.root,bd=1,relief='solid')
+        self.frame01.place(relx=0.145,rely=0.025,relwidth=0.75,relheight=0.55)
 
+        Objetos.botoes(self,self.root,'Calcular',lx=0.255,ly=0.65,largura=0.45,altura=0.125,comando=lambda:self.calcular(self,self.txval01.get(),self.txval02.get()))
+        Objetos.botoes(self,self.root,'Limpar',lx=0.255,ly=0.825,largura=0.45,altura=0.125,comando=self.limpar)
+
+        Objetos.labels(self,self.frame01,'Digite Valor 01',lx=0.01,ly=0.195,largura=0.45,altura=0.12)
+        Objetos.labels(self,self.frame01,'Digite Valor 02',lx=0.01,ly=0.425,largura=0.45,altura=0.12)
+        Objetos.labels(self,self.frame01,'Resultado',lx=0.015,ly=0.65,largura=0.365,altura=0.12)
+        
         self.textbox()
-
+                
         self.root.mainloop()
 
+
         pass
+
 
     def textbox(self):
 
-        self.val1=Entry(self.root,bd=0.5,relief='solid')
-        self.val2=Entry(self.root,bd=0.5,relief='solid')
-        self.res=Entry(self.root,bd=0.5,relief='solid')
+        self.txval01=Entry(self.frame01,bd=1,relief='solid')
+        self.txval02=Entry(self.frame01,bd=1,relief='solid')
+        self.txresultado=Entry(self.frame01,bd=1,relief='solid')
 
-        self.val1.place(relx=0.35,rely=0.15,relwidth=0.45,relheight=0.09)
-        self.val2.place(relx=0.35,rely=0.30,relwidth=0.45,relheight=0.09)
-        self.res.place(relx=0.35,rely=0.45,relwidth=0.45,relheight=0.09)
+        self.txval01.place(relx=0.1,rely=0.335,relwidth=0.75,relheight=0.085)
+        self.txval02.place(relx=0.1,rely=0.555,relwidth=0.75,relheight=0.085)
+        self.txresultado.place(relx=0.1,rely=0.77,relwidth=0.75,relheight=0.085)
+        self.txresultado['state']='disabled'
 
-        self.res.config(state='disabled')
-
-        self.val1.focus()    
+        self.txval01.focus()
 
         pass
 
-    def calcular(self,val01,val02):
-                        
-        if val01=='' or val02=='':
+    def calcular(self,valor1,valor2,res=None,status=False):
 
-            messagebox.showerror('Atenção','Favor preencher os campos informados!')
-            self.val1.focus()
+        if self.txval01.get().strip()=='' or self.txval02.get().strip()=='':
+
+            messagebox.showwarning('Atenção','Favor preencher todos os campos!')
 
         else:
 
-            if val01.isnumeric() and val02.isnumeric():
+            try:
 
-                self.res.config(state='normal')
-                self.res.delete(0,END)
+                valor1=float(self.txval01.get().replace(',','.'))
+                valor2=float(self.txval02.get().replace(',','.'))
 
-                val01=float(val01)
-                val02=float(val02)
+                res=valor1+valor2
 
-                res=val01+val02
+                self.txresultado['state']='normal'
+                self.txresultado.insert(END,f'{res:.2f}')
+                self.txresultado['state']='disabled'
 
-                self.res.insert(END,f'{res:.2f}')
+            except:
 
-            else:
+                messagebox.showerror('Erro','Dados inseridos são invalidos')
+                self.limpar()            
 
-                messagebox.showwarning('Atenção','Dados inseridos são invalidos!')
-                self.limpar(val01,val02,self.res,True)
+        pass
+
+
+    def limpar(self):
+
+        self.txval01.delete(0,END)
+        self.txval02.delete(0,END)
+        self.txresultado['state']='normal'
+        self.txresultado.delete(0,END)
+        self.txresultado['state']='disabled'
+        self.txval01.focus()
 
         pass
 
-    def limpar(self,val01,val02,res,corte=False):
-
-        if corte==False:
-
-            if val01=='' and val02=='' and res=='':
-
-                self.val1.delete(0,END)
-                self.val2.delete(0,END)
-                self.res.delete(0,END)
-
-            else:
-
-                resp=messagebox.askyesno('Pergunta','Deseja limpar os campos!')
-
-                if resp==True:
-
-                    self.val1.delete(0,END)
-                    self.val2.delete(0,END)
-                    self.res.delete(0,END)
-
-                    self.val1.focus()
-                    self.res['state']='disabled'
-
-        else:
-
-            self.val1.delete(0,END)
-            self.val2.delete(0,END)
-            self.res.delete(0,END)
-
-            self.val1.focus()
-            self.res['state']='disabled'                
-
-        pass
 
     pass
+
 
 App03()

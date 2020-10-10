@@ -1,55 +1,51 @@
-from os import system
 from tkinter import*
-
-system('cls')
 
 class Objetos:
 
     def __init__(self):
-     
+        super().__init__()
+
         self.root=Tk()
 
-        pass
+        self.tela()
+        self.botoes()
+        self.labels()
 
-    def tela(self,titulo,imagemico='Tkinter/Aplicações/Imagem/bussola.ico',cores=None,borda=None,tipoborda=None):
+        pass
+        
+    def tela(self,tela,titulo=None,imagem='Aplicações/Imagem/bussola.ico',cor=None,fonte=None,linha=None,borda=None):
+
+        self.root=tela
 
         self.root.title(titulo)
-        self.root.iconbitmap(imagemico)
-
-        self.root['bg']=cores
-        self.root['bd']=borda
-        self.root['relief']=tipoborda
+        self.root.iconbitmap(imagem)
+        self.root['bg']=cor
+        self.root['font']=fonte
+        self.root['bd']=linha
+        self.root['relief']=borda
 
         pass
 
-    def botoes(self,master,titulo,lx=0,ly=0,largura=0,altura=0,comando=None,cores=None):
+    def labels(self,tela,texto=None,cor=None,lx=None,ly=None,largura=None,altura=None):
+        
+        self.root=tela
 
-        self.root=master
+        self.labels=Label(self.root,text=texto)
+        self.labels['bg']=cor
 
-        self.botao=Button(self.root,text=titulo,command=comando,bd=cores)
+        self.labels.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
+
+        pass
+
+    def botoes(self,tela,texto=None,comando=None,cor=None,lx=None,ly=None,largura=None,altura=None):
+
+        self.root=tela
+
+        self.botao=Button(self.root,text=texto,command=comando)
+        self.botao['bg']=cor
+
         self.botao.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
 
         pass
 
-    def labels(self,master,titulo,lx=0,ly=0,largura=0,altura=0,cores=None,posicao=None,lz=None):
-
-        self.root=master
-
-        self.nome=Label(self.root,text=titulo,bg=cores,justify=posicao,anchor=lz)
-        self.nome.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
-
-        pass
-
-
-    def caixaOpcao(self,master,titulo,variavel,valor,lx=0,ly=0,largura=0,altura=0,cores=None,selecionar=None):
-
-        self.root=master
-        
-        self.opcoes=Radiobutton(self.root,text=titulo,variable=variavel,value=valor)
-        self.opcoes.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
-
-        if selecionar!=None:
-
-            self.opcoes.select()
-
-        pass
+    pass
