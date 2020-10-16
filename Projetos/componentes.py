@@ -37,7 +37,7 @@ class Objetos:
 
         pass
 
-    def botoes(self,tela,texto=None,comando=None,cor=None,lx=None,ly=None,largura=None,altura=None):
+    def botoes(self,tela,texto=None,comando=None,cor=None,lx=None,ly=None,largura=None,altura=None,status='normal'):
 
         self.root=tela
 
@@ -45,6 +45,8 @@ class Objetos:
         self.botao['bg']=cor
 
         self.botao.place(relx=lx,rely=ly,relwidth=largura,relheight=altura)
+
+        self.botao['state']=status
 
         pass
 
